@@ -17,25 +17,29 @@ namespace MessageBoards.ConsoleApp
 
             while (true)
             {
+                // Print nice caret.
                 System.Console.Write("> ");
+
+                // Read command from user.
                 string command = System.Console.ReadLine();
 
-                // "q" to quit
+                // "q" to quit.
                 if (command.ToLowerInvariant() == "q")
                     break;
 
+                // Loop over each command identifier to see if it is the one that matches the command.
                 foreach (CommandIdentifierBase commandIdentifier in commandIdentifiers)
                 {
                     bool isMatch = commandIdentifier.IsMatch(command);
-                    //Match match = commandIdentifier.Match(testCommand);
                     string[] commandTokens = commandIdentifier.GetCommandTokens(command);
-                    //CommandType commandType = commandIdentifier.CommandType;
                     BaseCommandHandler handler = commandIdentifier.CommandHandler;
 
                     if (isMatch)
                     {
-                        // Call the handler to execute the command
+                        // Call the handler to execute the command.
                         handler.HandleCommand(commandTokens);
+
+                        // Command handled, we can wait for the next command.
                         break;
                     }
                 }
